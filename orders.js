@@ -60,8 +60,43 @@ async function list(options = {}) {
 }
 
 
+/**
+ * Edit an order
+ * @param {string} _id - The ID of the order to update
+ * @param {object} change - The changes to apply
+ * @returns {Promise<object>} - The updated order
+ */
+async function edit(_id, change) {
+  const order = await get(_id);
+
+  if (!order) {
+    throw new Error(`Order with ID ${_id} not found`);
+  }
+
+  Object.keys(change).forEach((key) => {
+    order[key] = change[key];
+  });
+
+  await order.save();
+  return order;
+}
+
+/**
+ * Delete an order
+ * @param {string} _id - The ID of the order to delete
+ * @returns {Promise<void>} - No return value
+ */
+async function destroy(_id) {
+  const result = await Order.deleteOne({ _id });
+  if (result.deletedCount === 0) {
+    throw new Error(`Order with ID ${_id} not found`);
+  }
+}
+
 module.exports = {
-    create,
-    get,
-    list,
-   }
+  create,
+  get,
+  list,
+  edit,
+  destroy,
+};
