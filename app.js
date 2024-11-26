@@ -23,6 +23,10 @@ app.post('/products', api.createProduct)
 app.get('/orders', api.listOrders)
 app.post('/orders', api.createOrder)
 
+//Update for orders... 
+app.put('/orders/:id', api.editOrder);
+app.delete('/orders/:id', api.deleteOrder);
+
 // Boot the server
 app.listen(port, () => console.log(`Server listening on port ${port}`))
 

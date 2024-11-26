@@ -88,6 +88,20 @@ async function listOrders (req, res, next) {
   res.json(orders)
 }
 
+//updated code for order
+async function editOrder(req, res, next) {
+  const change = req.body;
+  const order = await Orders.edit(req.params.id, change);
+
+  res.json(order);
+}
+
+async function deleteOrder(req, res, next) {
+  await Orders.destroy(req.params.id);
+  res.json({ success: true });
+}
+
+
 module.exports = autoCatch({
   handleRoot, 
   listProducts,
@@ -97,4 +111,7 @@ module.exports = autoCatch({
   deleteProduct,
   listOrders,
   createOrder,
+  //edit and delete
+  editOrder,
+  deleteOrder
 });
